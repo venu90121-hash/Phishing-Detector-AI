@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AVINASH AI | URL PHISHING DETECTOR</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00f2ff; 
+            --safe: #00ff88;    
+            --danger: #ff0055;  
+            --bg: #050811;      
+        }
+
+        body {
+            font-family: 'Orbitron', sans-serif;
+            background-color: var(--bg);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        /* --- 3D GRID BACKGROUND --- */
+        .background-grid {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background-image: 
+                linear-gradient(rgba(0, 242, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 242, 255, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            transform: perspective(500px) rotateX(60deg);
+            animation: moveGrid 10s linear infinite;
+            z-index: -1;
+            top: -50%;
+        }
+        @keyframes moveGrid {
+            0% { transform: perspective(500px) rotateX(60deg) translateY(0); }
+            100% { transform: perspective(500px) rotateX(60deg) translateY(50px); }
+        }
+
+        /* --- ADVANCED FULL BODY BOT --- */
+        #bot-wrapper {
+            display: none;
+            position: absolute;
+            top: -240px;
+            left: 50%;
+            transform: translateX(-50%) scale(0);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .bot { position: relative; width: 100px; height: 180px; animation: float 3s ease-in-out infinite; }
+        
+        .bot-head {
+            width: 60px; height: 50px; background: #1e293b; border: 2px solid var(--primary);
+            border-radius: 20px; margin: 0 auto; position: relative; z-index: 2;
+        }
+        .eye { width: 10px; height: 10px; background: var(--primary); border-radius: 50%; position: absolute; top: 15px; }
+        .eye-l { left: 12px; } .eye-r { right: 12px; }
+
+        .bot-body {
+            width: 50px; height: 60px; background: #1e293b; border: 2px solid var(--primary);
+            border-radius: 10px; margin: -5px auto 0; position: relative;
+        }
+        .arm {
+            width: 15px; height: 45px; background: #1e293b; border: 2px solid var(--primary);
+            position: absolute; top: 5px; border-radius: 10px; transition: 0.6s ease-in-out;
+        }
+        .arm-l { left: -20px; transform: rotate(20deg); }
+        .arm-r { right: -20px; transform: rotate(-20deg); }
+
+        .leg {
+            width: 12px; height: 40px; background: #1e293b; border: 2px solid var(--primary);
+            position: absolute; bottom: -35px; border-radius: 5px;
+        }
+        .leg-l { left: 10px; } .leg-r { right: 10px; }
+
+        /* --- ANIMATION 1: SAFE (VANAKKAM) --- */
+        .vanakkam .arm-l { transform: translate(28px, -8px) rotate(-45deg); z-index: 3; }
+        .vanakkam .arm-r { transform: translate(-28px, -8px) rotate(45deg); z-index: 3; }
+
+        /* --- ANIMATION 2: DANGER (STOP/CROSS) --- */
+        .danger-pose .arm-l { transform: translate(25px, 0px) rotate(-130deg); z-index: 3; }
+        .danger-pose .arm-r { transform: translate(-25px, 0px) rotate(130deg); z-index: 3; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        /* --- NEON EFFECT BOX --- */
+        .container {
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(15px);
+            padding: 40px; border-radius: 30px; border: 2px solid var(--primary);
+            width: 450px; text-align: center; position: relative;
+            animation: neonPulse 2s infinite alternate;
+        }
+
+        @keyframes neonPulse {
+            from { box-shadow: 0 0 10px rgba(0, 242, 255, 0.2); }
+            to { box-shadow: 0 0 25px rgba(0, 242, 255, 0.5); }
+        }
+
+        .safe-neon { border-color: var(--safe) !important; animation: neonSafe 1.5s infinite alternate !important; }
+        .danger-neon { border-color: var(--danger) !important; animation: neonDanger 1.5s infinite alternate !important; }
+
+        @keyframes neonSafe { to { box-shadow: 0 0 40px var(--safe); } }
+        @keyframes neonDanger { to { box-shadow: 0 0 40px var(--danger); } }
+
+        h1 { font-size: 22px; color: var(--primary); margin-bottom: 5px; }
+        input { width: 100%; padding: 15px; background: #000; border: 1px solid var(--primary); border-radius: 8px; color: white; margin-bottom: 20px; font-family: 'Orbitron'; box-sizing: border-box;}
+        button { width: 100%; padding: 15px; background: var(--primary); border: none; font-weight: bold; cursor: pointer; text-transform: uppercase; border-radius: 8px; transition: 0.3s;}
+        
+        .result { margin-top: 25px; font-size: 18px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="background-grid"></div>
+
+    <div class="container" id="mainCard">
+        <div id="bot-wrapper">
+            <div class="bot" id="botEntity">
+                <div class="bot-head">
+                    <div class="eye eye-l"></div>
+                    <div class="eye eye-r"></div>
+                </div>
+                <div class="bot-body">
+                    <div class="arm arm-l"></div>
+                    <div class="arm arm-r"></div>
+                    <div class="leg leg-l"></div>
+                    <div class="leg leg-r"></div>
+                </div>
+            </div>
+        </div>
+
+        <h1>AVINASH AI</h1>
+        <p style="font-size: 9px; opacity: 0.6; letter-spacing: 4px; margin-bottom: 20px;">SECURITY ANALYSIS CORE</p>
+        
+        <form action="/" method="post">
+            <input type="text" name="url" placeholder="ENTER ACCESS URL..." required>
+            <button type="submit">INITIALIZE SCAN</button>
+        </form>
+
+        {% if prediction_text %}
+            <div id="res" class="result">{{ prediction_text }}</div>
+        {% endif %}
+    </div>
+
+    <script>
+        function triggerBot(isSafe, message) {
+            const wrapper = document.getElementById('bot-wrapper');
+            const bot = document.getElementById('botEntity');
+            const card = document.getElementById('mainCard');
+            const color = isSafe ? '#00ff88' : '#ff0055';
+            
+            card.classList.add(isSafe ? 'safe-neon' : 'danger-neon');
+            
+            wrapper.style.display = 'block';
+            setTimeout(() => {
+                wrapper.style.transform = 'translateX(-50%) scale(1)';
+                
+                // --- SWITCH ANIMATION BASED ON RESULT ---
+                if (isSafe) {
+                    bot.classList.add('vanakkam');
+                } else {
+                    bot.classList.add('danger-pose');
+                }
+
+                bot.querySelectorAll('.bot-head, .bot-body, .arm, .leg').forEach(el => {
+                    el.style.borderColor = color;
+                    el.style.boxShadow = `0 0 15px ${color}`;
+                });
+                bot.querySelectorAll('.eye').forEach(el => {
+                    el.style.background = color;
+                    el.style.boxShadow = `0 0 15px ${color}`;
+                });
+            }, 100);
+
+            const speech = new SpeechSynthesisUtterance(message);
+            window.speechSynthesis.speak(speech);
+        }
+
+        window.onload = function() {
+            const resultDiv = document.getElementById('res');
+            if (resultDiv) {
+                const text = resultDiv.innerText;
+                if (text.includes("SAFE")) {
+                    resultDiv.style.color = "#00ff88";
+                    triggerBot(true, "Your link is safe sir, you can proceed. Thank you.");
+                } else {
+                    resultDiv.style.color = "#ff0055";
+                    triggerBot(false, "Sorry sir, it is a fake link. Do not proceed sir. Thank you.");
+                }
+            }
+        };
+    </script>
+</body>
+</html>
